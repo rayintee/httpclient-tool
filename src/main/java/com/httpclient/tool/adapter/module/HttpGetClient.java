@@ -2,16 +2,14 @@ package com.httpclient.tool.adapter.module;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
@@ -33,18 +31,18 @@ public class HttpGetClient {
 		String ret = ConstantsUtil.Default_Result_String;// 默认返回
 		try {
 			httpClient = HttpClients.createDefault();// 创建默认的http client
-			RequestBuilder rb = RequestBuilder.get();
-			List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+			RequestBuilder rb = RequestBuilder.get().setUri(new URI(url));
+			//List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 			// 传入各种参数
 			for (Entry<String, Object> set : params.entrySet()) {
 				String key = set.getKey();
 				String value = set.getValue() == null ? "" : set.getValue().toString();
-				nvps.add(new BasicNameValuePair(key, value));
+				rb.addParameter(new BasicNameValuePair(key, value));
 				suf.append(" [\"" + key + "\":" + value + "] ");
 			}
 			System.out.println("params值-->\n" + suf.toString());
-			UrlEncodedFormEntity uefEntity= new UrlEncodedFormEntity(nvps, "UTF-8");
-			httpGet = rb.setEntity(uefEntity).setUri(url).build();
+			//UrlEncodedFormEntity uefEntity= new UrlEncodedFormEntity(nvps, "UTF-8");
+			httpGet = rb.build();
 			response = httpClient.execute(httpGet);
 			response.addHeader("charset", "UTF-8");
 			int statusCode = response.getStatusLine().getStatusCode();// 状态码
@@ -66,6 +64,8 @@ public class HttpGetClient {
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		} finally{
 			if(response != null){
