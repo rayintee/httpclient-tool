@@ -16,9 +16,9 @@ public class App {
 		//tiku.formFileUpload();
 		
 		// 调用获取用户文档列表信息接口
-		tiku.getDocList();
+		//tiku.getDocList();
 		
 		// 调用获取文档内容信息接口
-		//tiku.getDocList();
+		tiku.getTopicList();
 	}
 }
