@@ -19,6 +19,9 @@ public class App {
 		//tiku.getDocList();
 		
 		// 调用获取文档内容信息接口
-		tiku.getTopicList();
+		//tiku.getTopicList();
+		
+		//调用删除文档信息接口
+		tiku.delDocInfo();
 	}
 }
