@@ -36,6 +36,7 @@ public class TiKuInterfaceTest {
 		params.put("className", CLASS_NAME);// 年级
 		params.put("subject", SUBJECT);// 科目
 		params.put("hours", HOURS);// 课时
+		params.put("docType", 3); //情景类型
 		Map<String, Object> m = new HashMap<String, Object>();
 		String text = JSON.toJSONString(params);
 		System.out.println("将参数转换成json字符串-->\n" + text);
@@ -64,6 +65,7 @@ public class TiKuInterfaceTest {
 		// 表单参数
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("userId", USER_ID);
+		params.put("docType", 3);
 		
 		//调用获取文档列表接口
 		String ret = HttpGetClient.get(url, params);
